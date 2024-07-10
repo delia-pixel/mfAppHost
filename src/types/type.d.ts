@@ -34,7 +34,6 @@ interface MovieItem {
   popularity: number;
   poster_path: string;
   production_companies: ProductionMovie[];
-
   release_date: string;
   revenue: number;
   runtime: number;

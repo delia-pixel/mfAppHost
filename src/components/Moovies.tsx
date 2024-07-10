@@ -1,12 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
 import Moovie from "remote_library/MoovieItem";
 import { fetchMoovies } from "../util/http";
+import { useEffect } from "react";
 
 export default function Moovies() {
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ["moovies"],
-    queryFn: fetchMoovies,
-  });
+  let isPending: boolean = false;
+
+  // const { isPending, isError, data, error } = useQuery({
+  //   queryKey: ["moovies"],
+  //   queryFn: ({ signal }) => fetchMoovies({ signal }),
+  // });
+
+  useEffect(() => {
+    isPending = true;
+    fetchMoovies().then((response) => {
+      const data: Moovies[] = response.json();
+    });
+  }, []);
 
   let content;
   if (isPending) {
