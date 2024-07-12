@@ -1,28 +1,21 @@
 import Moovie from "remote_library/MoovieItem";
 import { fetchMoovies } from "../util/http";
-import { useEffect } from "react";
+import { useFetch } from "../hooks/useFetch";
+import { useAtomValue } from "jotai";
+import { movieAtom } from "../store/atoms";
 
 export default function Moovies() {
-  let isPending: boolean = false;
+  const { isPending, error, data } = useFetch(fetchMoovies);
 
-  // const { isPending, isError, data, error } = useQuery({
-  //   queryKey: ["moovies"],
-  //   queryFn: ({ signal }) => fetchMoovies({ signal }),
-  // });
-
-  useEffect(() => {
-    isPending = true;
-    fetchMoovies().then((response) => {
-      const data: Moovies[] = response.json();
-    });
-  }, []);
+  const movData = useAtomValue(movieAtom);
+  console.log(movData);
 
   let content;
   if (isPending) {
     content = <p>Loading data ...</p>;
   }
 
-  if (isError) {
+  if (error) {
     content = <p>{error.message}</p>;
   }
   if (data) {

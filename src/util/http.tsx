@@ -1,4 +1,4 @@
-export async function fetchMoovies(): Promise<Moovies[]> {
+export async function fetchMoovies(): Promise<Moovies> {
   const options = {
     method: "GET",
     headers: {
